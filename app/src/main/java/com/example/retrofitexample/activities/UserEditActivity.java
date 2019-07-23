@@ -17,7 +17,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UserEditActivity extends AppCompatActivity {
-
+    User user;
     EditText name;
     Button edit, delete;
     int position;
@@ -38,9 +38,8 @@ public class UserEditActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String newName = name.getText().toString();
-                MainActivity.users.get(position).setName(newName);
-
-                Call<User> userCall = MainActivity.api.setUserById(MainActivity.users.get(position).getId(), MainActivity.users.get(position));
+                user.setName(newName);
+                Call<User> userCall = MainActivity.api.setUserById(user.getId(), user);
                 userCall.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
@@ -60,11 +59,10 @@ public class UserEditActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<User> call = MainActivity.api.deleteUserById(MainActivity.users.get(position).getId());
+                Call<User> call = MainActivity.api.deleteUserById(user.getId());
                 call.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
-                        MainActivity.users.remove(position);
                         Toast.makeText(getApplicationContext(), "onResponse", Toast.LENGTH_SHORT);
                         MainActivity.listViewAdapter.notifyDataSetChanged();
                         UserEditActivity.this.finish();
@@ -85,8 +83,11 @@ public class UserEditActivity extends AppCompatActivity {
         name = findViewById(R.id.user_name_edit);
 
         Intent i = getIntent();
-        position = i.getIntExtra("position", 0);
+        Bundle bundle = i.getExtras();
+        user = (User) bundle.getSerializable("user");
 
-        name.setText(MainActivity.users.get(position).getName());
+
+        assert user != null;
+        name.setText(user.getName());
     }
 }

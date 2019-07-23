@@ -24,5 +24,5 @@ public interface ApiInterface {
     Call<User> deleteUserById(@Path("id") int id);
 
     @POST("/user/")
-    Call<User> deleteUserById();
+    Call<User> addRandomUser();
 }

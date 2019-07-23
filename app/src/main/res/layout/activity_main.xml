@@ -6,15 +6,17 @@
     android:orientation="vertical"
     tools:context="com.example.retrofitexample.activities.MainActivity">
 
-    <android.support.design.widget.FloatingActionButton
-        android:src="@drawable/ic_done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
     <!-- Don't forget to give an id to ListView -->
+    <Button
+        android:id="@+id/add_random_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Random User" />
+
     <ListView
         android:id="@+id/user_list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>
